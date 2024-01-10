@@ -1,36 +1,43 @@
 package edu.hawaii.its.api.groupings;
 
 import edu.hawaii.its.api.type.GroupingPath;
+import edu.hawaii.its.api.wrapper.GetGroupsResults;
+import edu.hawaii.its.api.wrapper.Group;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupingPaths {
 
-    private List<GroupingPath> groupingPaths;
     private String resultCode;
+    private List<GroupingPath> groupingPaths;
+
 
     public GroupingPaths() {
-        groupingPaths = new ArrayList<>();
-        this.resultCode = "FAILURE";
+        setGroupingPaths(new ArrayList<>());
+        setResultCode("FAILURE");
     }
 
-    public GroupingPaths(List<GroupingPath> groupingPaths) {
+    public GroupingPaths(GetGroupsResults getGroupsResults) {
+        setGroupingPaths(getGroupsResults);
+        setResultCode(getGroupsResults.getResultCode());
+    }
+
+    public void setGroupingPaths(List<GroupingPath> groupingPaths) {
         this.groupingPaths = groupingPaths;
-        this.resultCode = "SUCCESS";
     }
 
-    public void addGroupingPath(GroupingPath groupingPath) {
-        this.groupingPaths.add(groupingPath);
-        this.resultCode = "SUCCESS";
+    public void setGroupingPaths(GetGroupsResults getGroupsResults) {
+        this.groupingPaths = new ArrayList<>();
+        for (Group group : getGroupsResults.getGroups()) {
+            this.groupingPaths.add(new GroupingPath(group.getGroupPath()));
+        }
+
     }
 
     public List<GroupingPath> getGroupingPaths() { return this.groupingPaths; }
 
-    public void setGroupingPaths(List<GroupingPath> groupingPaths) {
-        this.groupingPaths = groupingPaths;
-        this.resultCode = "SUCCESS";
-    }
+    public void setResultCode(String resultCode) { this.resultCode = resultCode; }
 
     public String getResultCode() { return this.resultCode; }
 }
