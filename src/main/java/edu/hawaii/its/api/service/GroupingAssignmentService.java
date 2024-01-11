@@ -56,7 +56,7 @@ public class GroupingAssignmentService {
         if (!memberService.isAdmin(adminUhIdentifier)) {
             throw new AccessDeniedException();
         }
-        return new GroupingPaths(grouperApiService.getGroupsResults(adminUhIdentifier));
+        return new GroupingPaths(groupingsService.allGroupAttributeResults());
     }
 
     /**
