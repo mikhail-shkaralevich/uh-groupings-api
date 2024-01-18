@@ -1,5 +1,6 @@
 package edu.hawaii.its.api.groupings;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import edu.hawaii.its.api.type.GroupingPath;
 import edu.hawaii.its.api.wrapper.Group;
 import edu.hawaii.its.api.wrapper.GroupAttributeResults;
@@ -23,6 +24,7 @@ public class GroupingPaths {
         setResultCode(groupAttributeResults.getResultCode());
     }
 
+    @JsonSetter
     public void setGroupingPaths(List<GroupingPath> groupingPaths) {
         this.groupingPaths = groupingPaths;
     }
