@@ -91,7 +91,7 @@ public class GroupingAttributeService {
      * OPT_IN, OPT_OUT, and sync destinations are allowed.
      */
     public GroupingsServiceResult changeGroupAttributeStatus(String groupPath, String ownerUhIdentifier,
-            String attributeName, boolean turnAttributeOn) {
+                                                             String attributeName, boolean turnAttributeOn) {
         logger.info(String.format("changeGroupAttributeStatus; groupPath: %s; ownerUhIdentifier: %s; attributeName: %s, turnAttributeOn: %s",
                 groupPath, ownerUhIdentifier, attributeName, turnAttributeOn));
         checkPrivileges(groupPath, ownerUhIdentifier);
@@ -159,7 +159,7 @@ public class GroupingAttributeService {
 
     // Updates a Group's description, then passes the Group object to GrouperFactoryService to be saved in Grouper.
     public GroupingUpdateDescriptionResult updateDescription(String groupPath, String ownerUsername,
-            String description) {
+                                                             String description) {
         logger.info(String.format("updateDescription; groupPath: %s; ownerUsername: %s; description: %s;",
                 groupPath, ownerUsername, description));
 
