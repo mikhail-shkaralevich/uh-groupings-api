@@ -21,6 +21,9 @@ import edu.hawaii.its.api.wrapper.GroupAttribute;
 @Service
 public class GroupingAttributeService {
 
+    @Value("${groupings.api.trio}")
+    private String TRIO;
+
     @Value("${groupings.api.assign_type_group}")
     private String ASSIGN_TYPE_GROUP;
 
@@ -57,6 +60,13 @@ public class GroupingAttributeService {
         this.memberService = memberService;
         this.groupingsService = groupingsService;
         this.timestampService = timestampService;
+    }
+
+    /*
+    * Check if a group path belongs to an existing grouping.
+    */
+    public boolean isGroupingPath(String groupPath) {
+        return isGroupAttribute(groupPath, TRIO);
     }
 
     /**
