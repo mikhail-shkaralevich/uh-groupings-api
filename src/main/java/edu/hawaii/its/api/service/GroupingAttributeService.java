@@ -142,9 +142,7 @@ public class GroupingAttributeService {
                 currentUser, ASSIGN_TYPE_GROUP, assignOperation, groupingPath, attributeName, true);
 
         GroupingUpdatedAttributesResult result = new GroupingUpdatedAttributesResult(assignAttributesResults);
-        if(grouperService instanceof GrouperApiService) {
-            timestampService.update(result);
-        }
+        timestampService.update(result);
         return result;
     }
 
