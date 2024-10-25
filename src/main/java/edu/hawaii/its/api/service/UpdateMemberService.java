@@ -227,6 +227,7 @@ public class UpdateMemberService {
     }
 
     public GroupingMoveMemberResult optIn(String currentUser, String groupingPath, String uhIdentifier) {
+        // Should we check for path correctness here?
         log.info(String.format("optIn; currentUser: %s; groupingPath: %s; uhIdentifier %s;",
                 currentUser, groupingPath, uhIdentifier));
         checkIfSelfOptOrAdmin(currentUser, uhIdentifier);
@@ -239,6 +240,7 @@ public class UpdateMemberService {
     }
 
     public GroupingMoveMemberResult optOut(String currentUser, String groupingPath, String uhIdentifier) {
+        // Should we check for path here?
         log.info(String.format("optOut; currentUser: %s; groupingPath: %s; uhIdentifier %s;",
                 currentUser, groupingPath, uhIdentifier));
         checkIfSelfOptOrAdmin(currentUser, uhIdentifier);
@@ -321,6 +323,7 @@ public class UpdateMemberService {
      * Remove all members from group at groupPath.
      */
     private GroupingReplaceGroupMembersResult resetGroup(String groupPath) {
+        // Should we check for path here?
         AddMembersResults addMembersResults = grouperService.resetGroupMembers(groupPath);
         GroupingReplaceGroupMembersResult result = new GroupingReplaceGroupMembersResult(addMembersResults);
         if (grouperService instanceof GrouperApiService) {
