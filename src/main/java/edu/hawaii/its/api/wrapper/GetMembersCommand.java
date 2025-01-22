@@ -2,9 +2,11 @@ package edu.hawaii.its.api.wrapper;
 
 import java.util.List;
 
+import edu.hawaii.its.api.controller.*;
 import edu.internet2.middleware.grouperClient.api.GcGetMembers;
 import edu.internet2.middleware.grouperClient.ws.WsMemberFilter;
 import edu.internet2.middleware.grouperClient.ws.beans.WsGetMembersResults;
+import org.apache.commons.logging.*;
 
 /**
  * A wrapper for GcGetMembers. When groupPath(s) are passed, GetMembersCommand on execute fetches, from grouper, results
@@ -13,6 +15,8 @@ import edu.internet2.middleware.grouperClient.ws.beans.WsGetMembersResults;
 public class GetMembersCommand extends GrouperCommand implements Command<GetMembersResults> {
 
     private final GcGetMembers gcGetMembers;
+
+    private static final Log logger = LogFactory.getLog(GetMembersCommand.class);
 
     public GetMembersCommand() {
         this.gcGetMembers = new GcGetMembers();
@@ -70,6 +74,14 @@ public class GetMembersCommand extends GrouperCommand implements Command<GetMemb
 
     public GetMembersCommand assignMemberFilter(MemberFilter memberFilter) {
         gcGetMembers.assignMemberFilter(memberFilter.value());
+        return this;
+    }
+
+    public GetMembersCommand assignOwnerFilter(String filter) {
+        WsMemberFilter memberFilter =
+                filter.equalsIgnoreCase("All") ? WsMemberFilter.All : WsMemberFilter.Immediate;
+        logger.info("Member Filter: " + memberFilter);
+        gcGetMembers.assignMemberFilter(memberFilter);
         return this;
     }
 }

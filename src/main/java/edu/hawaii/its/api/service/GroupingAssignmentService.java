@@ -128,6 +128,29 @@ public class GroupingAssignmentService {
         }
         GroupingGroupMembers owners = groupingOwners(currentUser, groupPath).getImmediateOwners();
         return owners.getMembers().size();
+
+    /**
+     * Get owners of a grouping.
+     * @param filter All - direct and indirect; Immediate - direct owners only
+     */
+    public GroupingGroupMembers groupingOwners(String currentUser, String groupingPath, String filter) {
+        logger.info(String.format("groupingOwners; currentUser: %s; groupingPath: %s; filter: %s;", currentUser, groupingPath, filter));
+        return new GroupingGroupMembers(
+                grouperService.getMembersResult(currentUser, groupingPath + GroupType.OWNERS.value(), filter));
+    }
+
+    /**
+     * Get number of owners in a grouping.
+     * @param filter All - direct and indirect; Immediate - direct owners only
+     */
+    public Integer numberOfOwners(String currentUser, String groupPath, String filter) {
+        logger.debug(String.format("isSoleOwner; currentUser: %s; groupPath: %s; filter: %s",
+                currentUser, groupPath, filter))  ;
+        if (!memberService.isOwner(groupPath, currentUser)) {
+            throw new AccessDeniedException();
+        }
+        List<GroupingGroupMember> owners = groupingOwners(currentUser, groupPath, filter).getMembers();
+        return owners.size();
     }
 
     public Map<String, Group> makeGroups(GetMembersResults getMembersResults) {

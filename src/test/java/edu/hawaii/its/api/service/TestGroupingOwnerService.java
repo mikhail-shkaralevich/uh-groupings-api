@@ -213,5 +213,4 @@ public class TestGroupingOwnerService {
                 .filter(syncDestination -> !syncDestination.getDescription().contains("uhReleasedGrouping"))
                 .allMatch(e -> e.getDescription().contains(new Grouping(GROUPING).getName())));
     }
-
 }

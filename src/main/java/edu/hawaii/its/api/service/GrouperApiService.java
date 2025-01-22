@@ -250,6 +250,22 @@ public class GrouperApiService implements GrouperService {
     }
 
     /**
+     * Get all members listed in a group with a filter option for owners:
+     * "All" - direct and indirect owners; "Immediate" - direct owners.
+     */
+    public GetMembersResult getMembersResult(String currentUser, String groupPath, String filter) {
+        GetMembersResults getMembersResults = exec.execute(new GetMembersCommand()
+                .owner(currentUser)
+                .addGroupPath(groupPath)
+                .assignOwnerFilter(filter));
+        List<GetMembersResult> result = getMembersResults.getMembersResults();
+        if (result.isEmpty()) {
+            return new GetMembersResult();
+        }
+        return result.get(0);
+    }
+
+    /**
      * Get all members listed in each group.
      */
     public GetMembersResults getMembersResults(List<String> groupPaths) {
@@ -385,14 +401,15 @@ public class GrouperApiService implements GrouperService {
      * Get all members listed in a group.
      */
     public GetMembersResult getMembersResult(String currentUser, String groupPath, Integer pageNumber,
-            Integer pageSize, String sortString, Boolean isAscending) {
+            Integer pageSize, String sortString, Boolean isAscending, String filter) {
         GetMembersResults getMembersResults = exec.execute(new GetMembersCommand()
                 .owner(currentUser)
                 .addGroupPath(groupPath)
                 .setPageNumber(pageNumber)
                 .setPageSize(pageSize)
                 .setAscending(isAscending)
-                .sortBy(sortString));
+                .sortBy(sortString)
+                .assignOwnerFilter(filter));
         List<GetMembersResult> result = getMembersResults.getMembersResults();
         if (result.isEmpty()) {
             return new GetMembersResult();
