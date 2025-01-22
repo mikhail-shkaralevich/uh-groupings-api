@@ -3,6 +3,7 @@ package edu.hawaii.its.api.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import edu.hawaii.its.api.exception.*;
 import jakarta.mail.MessagingException;
 
 import org.apache.commons.logging.Log;
@@ -15,11 +16,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import edu.hawaii.its.api.exception.AccessDeniedException;
-import edu.hawaii.its.api.exception.CommandException;
-import edu.hawaii.its.api.exception.GroupingsHTTPException;
-import edu.hawaii.its.api.exception.InvalidGroupPathException;
-import edu.hawaii.its.api.exception.UhMemberNotFoundException;
 import edu.hawaii.its.api.service.EmailService;
 import edu.hawaii.its.api.type.ApiError;
 
@@ -198,6 +194,24 @@ public class ErrorControllerAdvice {
                 .status(HttpStatus.BAD_REQUEST)
                 .message("Invalid Group Path Exception")
                 .debugMessage("The group path you are using is wrong")
+                .timestamp(LocalDateTime.now());
+
+        errorBuilder.addAllSubErrors(ex.getSubErrors());
+
+        ApiError apiError = errorBuilder.build();
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(OwnerLimitExceededException.class)
+    public ResponseEntity<ApiError> handleOwnerLimitExceededException(
+            OwnerLimitExceededException ex) {
+        logger.info("Owner Limit Exceeded Exception is handled by the Exception Handler!");
+        emailService.sendWithStack(ex, "Limit Exceed Exception");
+        ApiError.Builder errorBuilder = new ApiError.Builder()
+                .status(HttpStatus.CONFLICT)
+                .message("MAX_OWNER_LIMIT_ERROR")
+                .debugMessage("Your action exceeds maximum number of allowed owners")
                 .timestamp(LocalDateTime.now());
 
         errorBuilder.addAllSubErrors(ex.getSubErrors());
