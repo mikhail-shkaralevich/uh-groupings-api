@@ -35,7 +35,7 @@ import edu.hawaii.its.api.wrapper.SubjectsResults;
 public class GrouperApiService implements GrouperService {
 
     private final ExecutorService exec;
-
+    
     public GrouperApiService(ExecutorService exec) {
         this.exec = exec;
     }
@@ -57,7 +57,8 @@ public class GrouperApiService implements GrouperService {
         HasMembersResults hasMembersResults = exec.execute(new HasMembersCommand()
                 .owner(currentUser)
                 .assignGroupPath(groupPath)
-                .addUhIdentifiers(uhIdentifiers));
+                .addUhIdentifiers(uhIdentifiers)
+                .setRetry(true));
         return hasMembersResults;
     }
 
@@ -364,7 +365,8 @@ public class GrouperApiService implements GrouperService {
                 .setAssignType(assignType)
                 .setAssignOperation(assignOperation)
                 .addGroupPath(groupPath)
-                .addAttribute(attributeName));
+                .addAttribute(attributeName)
+                .setRetry(true));
     }
 
     /**
@@ -378,7 +380,8 @@ public class GrouperApiService implements GrouperService {
                 .setGroupPath(groupPath)
                 .setPrivilege(privilegeName)
                 .setSubjectLookup(uhIdentifier)
-                .setIsAllowed(isAllowed));
+                .setIsAllowed(isAllowed)
+                .setRetry(true));
     }
 
     /**
