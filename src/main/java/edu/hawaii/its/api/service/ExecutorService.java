@@ -19,8 +19,6 @@ public class ExecutorService {
 
         if (command instanceof GrouperCommand) {
             retry = ((GrouperCommand<?>) command).isRetry();
-            if (retry)
-                logger.info("Execution with retry!");
         }
 
         String text = "execute; " + command.getClass().getSimpleName() + ": ";
