@@ -57,7 +57,8 @@ public class GrouperApiService implements GrouperService {
         HasMembersResults hasMembersResults = exec.execute(new HasMembersCommand()
                 .owner(currentUser)
                 .assignGroupPath(groupPath)
-                .addUhIdentifiers(uhIdentifiers));
+                .addUhIdentifiers(uhIdentifiers)
+                .setRetry(true));
         return hasMembersResults;
     }
 
@@ -365,7 +366,7 @@ public class GrouperApiService implements GrouperService {
                 .setAssignOperation(assignOperation)
                 .addGroupPath(groupPath)
                 .addAttribute(attributeName)
-                .setRetry());
+                .setRetry(true));
     }
 
     /**
@@ -380,7 +381,7 @@ public class GrouperApiService implements GrouperService {
                 .setPrivilege(privilegeName)
                 .setSubjectLookup(uhIdentifier)
                 .setIsAllowed(isAllowed)
-                .setRetry());
+                .setRetry(true));
     }
 
     /**

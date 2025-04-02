@@ -1,7 +1,10 @@
 package edu.hawaii.its.api.service;
 
-import edu.hawaii.its.api.wrapper.*;
 import org.springframework.stereotype.Service;
+
+import edu.hawaii.its.api.wrapper.GrouperCommand;
+import edu.hawaii.its.api.wrapper.Command;
+import edu.hawaii.its.api.wrapper.Results;
 
 import edu.internet2.middleware.grouperClientExt.org.apache.commons.logging.Log;
 import edu.internet2.middleware.grouperClientExt.org.apache.commons.logging.LogFactory;
